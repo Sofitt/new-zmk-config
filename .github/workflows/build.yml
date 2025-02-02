@@ -1,0 +1,38 @@
+name: Build Firmware
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup ZMK
+        uses: docker://zmkfirmware/zmk-dev-arm:3.2
+        with:
+          args: |
+            west init -l config
+            west update
+
+      - name: Build Left
+        uses: docker://zmkfirmware/zmk-dev-arm:3.2
+        with:
+          args: west build -s app -b promicro_nrf52840 -- -DSHIELD=corne_left -DZMK_CONFIG="/github/workspace/config"
+
+      - name: Build Right
+        uses: docker://zmkfirmware/zmk-dev-arm:3.2
+        with:
+          args: west build -s app -b promicro_nrf52840 -- -DSHIELD=corne_right -DZMK_CONFIG="/github/workspace/config"
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware
+          path: |
+            app/build/zephyr/zmk.uf2
