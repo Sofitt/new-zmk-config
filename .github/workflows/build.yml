@@ -13,12 +13,13 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Setup ZMK
+      - name: West Init
         uses: docker://zmkfirmware/zmk-build-arm:stable
-        with:
-          args: |
-            west init -l config
-            west -v update
+        run: west init -l "./config"
+
+      - name: West Update
+        uses: docker://zmkfirmware/zmk-build-arm:stable
+        run: west -v update
 
       - name: Build Left
         uses: docker://zmkfirmware/zmk-build-arm:stable
