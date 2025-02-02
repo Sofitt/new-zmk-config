@@ -15,11 +15,13 @@ jobs:
 
       - name: West Init
         uses: docker://zmkfirmware/zmk-build-arm:stable
-        run: west init -l "./config"
+        with:
+          args: west init -l "./config"
 
       - name: West Update
         uses: docker://zmkfirmware/zmk-build-arm:stable
-        run: west -v update
+        with:
+          args: west update
 
       - name: Build Left
         uses: docker://zmkfirmware/zmk-build-arm:stable
