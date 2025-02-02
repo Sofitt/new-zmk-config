@@ -14,19 +14,19 @@ jobs:
           submodules: recursive
 
       - name: Setup ZMK
-        uses: docker://zmkfirmware/zmk-dev-arm:3.2
+        uses: docker://zmkfirmware/zmk-build-arm:stable
         with:
           args: |
             west init -l config
             west update
 
       - name: Build Left
-        uses: docker://zmkfirmware/zmk-dev-arm:3.2
+        uses: docker://zmkfirmware/zmk-build-arm:stable
         with:
           args: west build -s app -b promicro_nrf52840 -- -DSHIELD=corne_left -DZMK_CONFIG="/github/workspace/config"
 
       - name: Build Right
-        uses: docker://zmkfirmware/zmk-dev-arm:3.2
+        uses: docker://zmkfirmware/zmk-build-arm:stable
         with:
           args: west build -s app -b promicro_nrf52840 -- -DSHIELD=corne_right -DZMK_CONFIG="/github/workspace/config"
 
