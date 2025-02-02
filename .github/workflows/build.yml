@@ -18,7 +18,7 @@ jobs:
         with:
           args: |
             west init -l config
-            west update
+            west -v update
 
       - name: Build Left
         uses: docker://zmkfirmware/zmk-build-arm:stable
