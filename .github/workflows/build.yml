@@ -23,6 +23,10 @@ jobs:
         with:
           args: west update
 
+      - name: Create build dir
+        run: |
+            mkdir config/app
+
       - name: Build Left
         uses: docker://zmkfirmware/zmk-build-arm:stable
         with:
